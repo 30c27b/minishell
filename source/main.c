@@ -10,38 +10,49 @@
 int
 	main(int argc, char **argv, char **envp)
 {
-	// char	*line;
-	// int		status;
+	char	*line;
+	int		status;
 	// t_prog	*prog;
 
 	(void)argc;
 	(void)argv;
 	msh_env(envp);
-	// status = 0;
-	// while (!status)
-	// {
-	// 	line = msh_prompt("msh$ ");
-	// 	msh_parse(line, &prog);
-	// 	msh_interpreter(prog); // will segfault until parser is done
-	// 	while (msh_parse(NULL, &prog) > 0)
-	// 	{
-	// 		msh_interpreter(prog);
-	// 	}
-	// 	fmt_print("\n");
-	// }
-	int	p[2];
-	printf("pipe ret: %i\n", pipe(p));
-	char *cmd[] = {"echo", "Lorem Ipsum\n", NULL};
-	t_prog testprog = {};
-	testprog.argv = cmd;
-	testprog.in_fd = 0;
-	testprog.out_fd = p[1];
-	msh_interpreter(&testprog);
-	char *cmd2[] = {"cat", NULL};
-	t_prog testprog2 = {0};
-	testprog2.argv = cmd2;
-	testprog2.in_fd = p[0];
-	testprog2.out_fd = 1;
-	msh_interpreter(&testprog2);
+	status = 0;
+	while (!status)
+	{
+		line = msh_prompt("msh$ ");
+		if (str_cmp(line, "exit") == 0)
+			msh_exit(0, "exit");
+		else
+		{
+			printf("cmd: %s\n", line);
+		}
+
+		// msh_parse(line, &prog);
+		// msh_interpreter(prog); // will segfault until parser is done
+		// while (msh_parse(NULL, &prog) > 0)
+		// {
+		// 	msh_interpreter(prog);
+		// }
+	}
+
+
+
+
+
+	// int	p[2];
+	// printf("pipe ret: %i\n", pipe(p));
+	// char *cmd[] = {"ls", "-la", NULL};
+	// t_prog testprog = {};
+	// testprog.argv = cmd;
+	// testprog.in_fd = 0;
+	// testprog.out_fd = p[1];
+	// msh_interpreter(&testprog);
+	// char *cmd2[] = {"cat", NULL};
+	// t_prog testprog2 = {0};
+	// testprog2.argv = cmd2;
+	// testprog2.in_fd = p[0];
+	// testprog2.out_fd = 1;
+	// msh_interpreter(&testprog2);
 	return (0);
 }

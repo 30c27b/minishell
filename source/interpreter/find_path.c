@@ -50,6 +50,7 @@ char	*path_find(char *cmd)
 			tmp = str_join(strs[i], "/");
 			path = str_join(tmp, path);
 			free(tmp);
+			path = str_join(strs[i], path);
 			str_split_free(strs);
 			return (path);
 		}
