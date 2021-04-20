@@ -4,8 +4,17 @@
 #include <stdio.h>
 #include <fcntl.h>
 #include <unistd.h>
+#include <signal.h>
 
 #include "private/prv_interpreter.h"
+
+void	sigint_handler(int sig)
+{
+	(void)sig;
+	signal(SIGINT, sigint_handler);
+	printf("\n");
+	msh_prompt("msh$ ");
+}
 
 int
 	main(int argc, char **argv, char **envp)
@@ -14,6 +23,7 @@ int
 	int		status;
 	// t_prog	*prog;
 
+	signal(SIGINT, sigint_handler);
 	(void)argc;
 	(void)argv;
 	msh_env(envp);
